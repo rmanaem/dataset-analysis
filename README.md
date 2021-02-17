@@ -6,7 +6,7 @@ Technological advances have led to high volumes of easily accessible and unrefin
 
 ## Introduction
 
-...
+The rise of the internet and more specifically digital media outlets like Facebook and Twitter have allowed any individual to share anything that is on their mind. The sharing of information comes with major challenges with such as the veracity of the information shared. This is particularly important, as these digital pieces of information have the potential to influence major events like the US Presidential Elections. In fact, in a study done by Buzzfeed, fake news stories have received more engagement on Facebook then real news [2]. 
 
 ## Maeterials and Methods
 
@@ -23,3 +23,4 @@ Technological advances have led to high volumes of easily accessible and unrefin
 ## References
 
 [1] [Fake and real news dataset](https://www.kaggle.com/clmentbisaillon/fake-and-real-news-dataset)
+[2] Chang, J., Lefferman, J., Pedersen, C., & Martz, G. (2016, November 29). ABC news. Retrieved February 17, 2021, from https://abcnews.go.com/Technology/fake-news-stories-make-real-news-headlines/story?id=43845383
