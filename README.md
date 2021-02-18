@@ -12,7 +12,7 @@ The task of validating news as essential as it may be, can be time consuming and
 
 This project is aimed at automating classification of news articles by training and testing machine learning models using supervised learning tools and techniques. This work explores key words, phrases, and other textual properties that appear in news articles to extract linguistic features for training models using classification algorithms.
 
-## Maeterials and Methods
+## Materials and Methods
 
 ...
 
