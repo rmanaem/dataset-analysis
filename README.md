@@ -14,7 +14,13 @@ This project is aimed at automating classification of news articles by training 
 
 ## Materials and Methods
 
-...
+The dataset consists of 2 .csv files: true.csv, containing real news and fake.csv containing fake news. Each datapoint contains 4 features: title, text, subject and date. The dataset is clean, does not have any missing values. For this missing values will not be checked in the pre-processing. The technique used to classify an instance will be supervised binary classification having labels true or false. 
+
+The problem in this project requires Natural Language Processing (NLP). Because of this, Python's nltk will be used. Scikit learn will also be used in this project. The dataset will first be read by Pandas.
+
+The nltk library will be used for multiple things. Although the data is cleaned, nltk will be used to pre-process to remove stopwords, which are words that do not add anything to the context or the sentence. Lemmatization will also be used in pre-processing. Lemmatization is defined as the grouping of similar words together to avoid reduntancy. It is especially useful since it allows similar words to be analyzed as one entity. 
+
+Once the pre-processing is done, *Scikit learn will also be used to vectorize the data*. Scikit learn will also be used to split the data. In order to split the data, k-fold cross validation will be used instead of a random split, to get more accurate training. 
 
 ## Results
 
