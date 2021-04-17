@@ -81,7 +81,7 @@ The comparison of models based on performance alone was conducted using a strati
     </tr>
 </table>
 
-<p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/classifier_performance.png?raw=true"/></a></p>
+<p alt="IDF" align="center"><a href="https://github.com/rmanaem/veracity-detection/tree/master/figures/classifier_performance.png"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/classifier_performance.png?raw=true"/></a></p>
 
 To examine the sensitivity of classifiers to the number of extracted features, a sample of 42000 data points with balanced class distribution was chosen. The sample was not stratified to make sure performance of models was not affected by stratification. The number of features were increased from 10 to 50 and the average f1 score of classifiers was recorded at each stage. As illustrated the table and the plot below, KNN numbers show a significant drop of more than 14% in the average f1 score as the number of features were increased while RF numbers show a very slight improvement in the performance of the model.
 
@@ -118,7 +118,7 @@ To examine the sensitivity of classifiers to the number of extracted features, a
     </tr>
 </table>
 
-<p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/classifier_sensitivity_to_features.png?raw=true"/></a></p>
+<p alt="IDF" align="center"><a href="https://github.com/rmanaem/veracity-detection/tree/master/figures/classifier_sensitivity_to_features.png"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/classifier_sensitivity_to_features.png?raw=true"/></a></p>
 
 To see how models performed in presence of data imbalance, two samples containing 30000 data points, one with balanced class distribution and the other with a 2 to 1 class distribution ratio favoring the fake class were selected. The f1 score of each classifier was recorded at each iteration of k-fold cross validation using each sample. As demonstrated by the table and the plot below, the performance of both classifiers was reduced when dataset was imbalanced however this reduction was much more significant in case of KNN (~1%) than RF (~0.0000962%).
 
@@ -150,7 +150,7 @@ To see how models performed in presence of data imbalance, two samples containin
     </tr>
 </table>
 
-<p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/effect_of_data_imbalance.png?raw=true"/></a></p>
+<p alt="IDF" align="center"><a href="https://github.com/rmanaem/veracity-detection/tree/master/figures/effect_of_data_imbalance.png"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/effect_of_data_imbalance.png?raw=true"/></a></p>
 
 Lastly models were tested to see the effect of stratification. To do so 21000 data points from each class were sampled and kept separate. After pre-processing, each set was then partitioned using k-fold cross validation. The folds from each class were merged with their respective counter part from the opposite class only before they were fed into the models for training and testing. As shown by the table and the plot below, stratification showed a very slight improvement in the overall results.
 
@@ -182,7 +182,7 @@ Lastly models were tested to see the effect of stratification. To do so 21000 da
     </tr>
 </table>
 
-<p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/effect_of_stratification.png?raw=true"/></a></p>
+<p alt="IDF" align="center"><a href="https://github.com/rmanaem/veracity-detection/tree/master/figures/effect_of_stratification.png"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/effect_of_stratification.png?raw=true"/></a></p>
 
 ---
 
