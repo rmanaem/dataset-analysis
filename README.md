@@ -14,12 +14,45 @@ This project is aimed at automating classification of news articles by training 
 
 ## Materials and Methods
 
-The dataset used in this project is the [Fake and real news dataset](https://www.kaggle.com/clmentbisaillon/fake-and-real-news-dataset?select=True.csv) retrieved from Kaggle.com, a website containing a large collection of free-to-use Big Data datasets. The dataset is seperated into 2 files: fake.csv (51.2 MB), containing 23503 entries considered as 'fake' news and a slightly smaller true.csv (51.1 MB), containing 21418 entries that are accepted as being 'real' news. The total size of this dataset is 110 MB. Due to recency of the issue in question, the dataset needed to contain recent articles. In this dataset, the articles were dated throughout the span of the year of 2017. 
+For analysis, an imbalanced dataset with catergorical features containing news articles from 2016 to 2017 was selected []. Dataset is comprised of two sets: a fake set containing 23503 fabricated articles (59.8 MB) and a true set containing 21418 authentic articles (51.8 MB). Attributes include title, text, subject, and the date of the article.
 
+### Data Pre-processing
 
-This project will use multiple technologies. First, Pandas will be used to convert the dataset into something that is easier to manipulate with code. The problem in this project requires Natural Language Processing (NLP). This project involves interpreting words into something that a machine can understand. There needs to be a way that can contextualize news article texts,  which can be done by NLP. Simply, NLP is defined as the automatic manipulation of natural language by software [4]. The library that will be used for NLP is nltk. Python's nltk is one of the most popular and widely accepted NLP library [5]. nltk's main objective in this project will be to pre-process the text. nltk provides powerful tools like tokenization, stemming, lemmatization, chunking and more to analyze the techs. Only some of the tools of nltk will be used in this project. Scikit learn will also be used in this project. Scikit learn is a Python ML library that contains features like classification, regression, clustering and more [5]. This library will be used for 2 important steps in this project: vectorization and ML algorithm.  Scikit learn contains  vectorization algorithms that helps convert words from tokenization to a data structure that can be processed by a machine. In other words, vectorization is converting tokens (array of words received from tokenization in the pre-processing step) of text into feature vectors which are numerical way of representing an object into a vector[7]. Multiple types of vectorization will be used including count vectorization and TF-IDF vectorization.
+Data pre-procesing was done utilizing tools from Pandas library [], Natural Language Tool Kit (NLTK) [], Spark [], and Scikit-larn [].
+Using Pandas DataFrames irrelevant features, subject and date, were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
 
-Since this project heavily relies on NLP, the approach that will be taken will be that of a NLP pipeline. This means that after the problem and dataset are selected and identified, the dataset will be pre-processed, vectorized and then put into ML algorithms. For pre-processing, the nltk library well be used. Although the data is cleaned, nltk will be used to pre-process to remove stopwords, which are words that do not add anything to the context or the sentence. Lemmatization will also be used in pre-processing. Lemmatization is defined as the grouping of words that have similar meaning together into one output (word in this case) to avoid reduntancy. It is especially useful since it allows similar words to be analyzed as one entity.  The data will also be tokenized by this library which will split the text into a list of strings in order to be computed much easily (mainly to be used in vectorization step). Scikit learn will then be used to vectorize the data so that we have a matrix in order to analyze our words. Count vectorization will create a matrix which returns the  the frequency of specific words in different articles. TF-IDF vectorization will also be used to check what is the importance of a word in a a particular string of text using the following formula:  tf-idf(t, d) = tf(t, d) * idf(t) where  idf(t) = log [ n / df(t) ] + 1 [8]. The Scikit learn provides with "Tfidvectorizer" which automatically does all the vectorization by itself. After this, the data will be split into training and test data using K-fold cross validation. Specifically, we decided to go with 5-fold cross validation. ML algorithms like decision trees and K-Nearest Neighbour (kNN) will then be used to classify the instances. Finally data will be analyzed by 3 metrics accuracy (number of correct prediction/observations), precision (number of real predicted positives/number of all predicted positives) and recall (number of real predicted positives/number of real postives).
+| Sample Name | Number of True Data Points | Number of Fake Data Points | Goal |
+| :-----: |     :-----:         |  :-----: | :-----:|
+| Balanced_Sample1 | 3000 | 3000 | Building models and tuning parametes |
+| Balanced_Sample2 | 15000 | 15000 | Large-scale analysis effect of data        imbalance |
+| Balanced_Sample3 | 21000 | 21000 | Resolving data imbalance and final training and testing of models |
+| Imbalanced_Sample1 | 2000 | 4000 | Small-scale analysis of effect of data imbalance |
+| Imbalanced_Sample2 | 10000 | 20000 | Large-scale analysis of effect of data imbalance |
+| Imbalanced_Sample3 | 20000 | 10000 | Large-scale analysis of effect of data imbalance |
+| Imbalanced_Sample4 | 21324 | 22314 | Dataset without anamolies |
+
+Using Spark RDDs data points were filtered to remove instances with missing features and anamolies. Title and text fields of each article were then concatenated to format data points into tuples containig content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [] and sequence of tokens extracted by examining articles, stop words from NLTK's stop words module and punctuation marks from Python's string module were used to filter out noise and trivial tokens from the word vectors to allow for a more robust feature extraction by focusing on important words.
+
+### Feature Extraction
+
+To conevrt the tokenized and filtered articles to a set of features utilized by classification algorithms, term frequency inverse document frequency (TF-IDF) technique was employed. TF-IDF is a feature vectorization method widely used in text mining to reflect the importance of a term to a document in the corpus. Term frequency of ***t*** in document ***d*** denoted by ***TF(t, d)*** is the number of times that term t appears in document ***d***, while document frequency of term ***t*** in corpus ***D*** denoted by ***DF(t, D)*** is the number of documents that contain term ***t***. Using term frequency alone to measure the importance would lead to emphasizing terms that appear very often but carry little information about the document. To resolve this issue Inverse document frequency is used as a numerical measure of how much information a term provides.
+
+<p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/idf.png?raw=true"/></a></p>
+
+<p alt="TFIDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/tfidf.png?raw=true"/></a></p>
+
+Spark’s TF-IDF is implemented in two steps:
+
+- HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick , mapping a raw feature into an index (term) by applying a hashing function. then term frequencies are calculated based on the mapped indices.
+- IDF: Estimator which is fit on a dataset and produces an IDFModel. The IDFModel takes feature vectors produced by HashingTF and scales each feature [].
+
+### Defining Training and Test Sets
+
+Training and test sets were defined by k-fold cross validation implemented using Scikit-learn’s KFold. The data was split into 5 folds and models are trained and tested 5 times. In each iteration 4 folds are used to train and 1 was used to test the models. The average performance was computed to reflect the overall result.
+
+### Classifiers
+
+For the binary classification of the articles into True and False classes, K-nearest neighbors (kNN) and random forest (RF) classifiers were chosen. kNN was implemented using Scikit-learn’s KNeighborsClassifier[]. The number of nearest neighbor for each sample was determined by the square root of the input and incremented if the result was even. Random forest classifier was implemented using Scikit-learn’s RandomForestClassifier[]. Random forest parameters were tuned resulting in an ensemble of 45 trees with max depth of 20.
 
 ## Results
 
