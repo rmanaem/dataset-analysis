@@ -2,15 +2,15 @@
 
 ## Abstract
 
-The dawn of the digital age and the World Wide Web paved the way for the dissemination of high volumes of unrefined information through online media outlets and social media platforms. Ease of access, corporate and political biases and lack of appropriate moderation in these mediums has resulted in the propagation of false information and fabricated news, forging an essential demand for filtration. This project aims at analyzing related data using supervised learning tools and techniques to develop models for veracity detection. This work explores different textual properties and patterns that appear in news articles to extract linguistic features for training models using classification algorithms.
+The dawn of the digital age and the World Wide Web paved the way for the dissemination of high volumes of unrefined information through online media outlets and social media platforms. Ease of access, corporate and political biases and lack of appropriate moderation in these mediums have resulted in the propagation of false information and fabricated news, forging an essential demand for filtration. This project aims at analyzing related data using supervised learning tools and techniques to develop models for veracity detection. This work explores different textual properties and patterns that appear in news articles to extract linguistic features for training models using classification algorithms.
 
 ---
 
 ## Introduction
 
-The advent of technology has surged through all aspects of life revolutionizing the way we receive, process, and pass on information. A multitude of our decisions is based on the information reported and broadcasted through different news and media outlets. These outlets and other entities utilize social media platforms (Facebook, Twitter, …) to further disseminate information to a broader audience. In a world where news organizations and the press have their own specific corporate and political allegiances and our means of communication and sharing information are designed to reinforce pre-existing biases, it's essential to recognize the significance of validity of the available information. The 2016 US presidential election is widely used as a prime example to demonstrate the impact of disinformation on major events. Propagation of fake news through Facebook and Twitter in the months leading up to the election influenced voter turnout in democratic voters and voter decisions in apolitical voters altering the course of the election [1].
+The advent of technology has surged through all aspects of life revolutionizing the way we receive, process, and pass on information. A multitude of our decisions are based on the information reported and broadcasted through different news and media outlets. These outlets and other entities utilize social media platforms (Facebook, Twitter, …) to further disseminate information to a broader audience. In a world where news organizations and the press have their own specific corporate and political allegiances and our means of communication and sharing information are designed to reinforce pre-existing biases, it's essential to recognize the significance of validity of the available information. The 2016 US presidential election is widely used as a prime example to demonstrate the impact of disinformation on major events. Propagation of fake news through Facebook and Twitter in the months leading up to the election influenced voter turnout in democratic voters and voter decisions in apolitical voters altering the course of the election [1].
 
-The task of validating news as essential as it may be can be time-consuming and difficult even for experts as It requires exhaustive research into different aspects. To tackle these challenges, automatic detection models have been researched by employing artificial intelligence and machine learning principles. One of the recent works proposed a novel hybrid deep learning model that combines convolutional and recurrent neural networks for fabricated news classification. This model was able to successfully validate two fake news datasets and achieve results that were significantly better than other non-hybrid baseline methods [2]. Another study utilized a machine learning ensemble approach to train a combination of different machine learning algorithms to expand their research beyond the domain of the existing literature. The ensemble learners showed promising results in a wide variety of applications as the learning models tended to reduce error rates using techniques such as bagging and boosting [3].
+The task of validating news as essential as it may be can be time-consuming and difficult even for experts as it requires exhaustive research into different aspects. To tackle these challenges, automatic detection models have been researched by employing artificial intelligence and machine learning principles. One of the recent works proposed a novel hybrid deep learning model that combines convolutional and recurrent neural networks for fabricated news classification. This model was able to successfully validate two fake news datasets and achieve results that were significantly better than other non-hybrid baseline methods [2]. Another study utilized a machine learning ensemble approach to train a combination of different machine learning algorithms to expand their research beyond the domain of the existing literature. The ensemble learners showed promising results in a wide variety of applications as the learning models tended to reduce error rates using techniques such as bagging and boosting [3].
 
 This project is aimed at automating the classification of news articles by training and testing machine learning models using supervised learning tools and techniques. This work explores keywords, phrases, and other textual properties that appear in news articles to extract linguistic features for training models using classification algorithms.
 
@@ -23,7 +23,7 @@ For analysis, an imbalanced dataset with categorical features containing news ar
 ### Data Pre-processing
 
 Data pre-processing was done utilizing tools from Pandas library [5], Natural Language Tool Kit (NLTK) [6], Spark [7], and Scikit-learn [8].
-Using Pandas DataFrames irrelevant features, subject, and date were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
+Using Pandas DataFrames, irrelevant features, namely subject and date were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
 
 | Sample Name | Number of True Data Points | Number of Fake Data Points | Goal |
 | :-----: |     :-----:         |  :-----: | :-----:|
@@ -35,7 +35,7 @@ Using Pandas DataFrames irrelevant features, subject, and date were removed and 
 | Imbalanced_Sample3 | 20000 | 10000 | Large-scale analysis of effect of data imbalance |
 | Imbalanced_Sample4 | 21324 | 22314 | Dataset without anamolies |
 
-Using Spark RDDs data points were filtered to remove instances with missing features and anomalies. Title and text fields of each article were then concatenated to format data points into tuples containing content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9] and sequence of tokens extracted by examining articles, stop words from NLTK's stop words module, and punctuation marks from Python's string module were used to filter out the noise and trivial tokens from the word vectors to allow for more robust feature extraction by focusing on important words.
+Using Spark RDDs, data points were filtered to remove instances with missing features and anomalies. Title and text fields of each article were then concatenated to format data points into tuples containing content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9] and then filtered to remove noise and trivial tokens using a sequence of tokens extracted by examining articles, stop words from NLTK's stop words module, and punctuation marks from Python's string module to allow for more robust feature extraction by focusing on important words.
 
 ### Feature Extraction
 
@@ -47,16 +47,16 @@ To convert the tokenized and filtered articles to a set of features utilized by 
 
 Spark’s TF-IDF is implemented in two steps:
 
-- HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick, mapping a raw feature into an index (term) by applying a hashing function. then term frequencies are calculated based on the mapped indices.
+- HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick, mapping a raw feature into an index (term) by applying a hashing function. Term frequencies are then calculated based on the mapped indices.
 - IDF: Estimator that fits on a dataset and produces an IDFModel. The IDFModel takes feature vectors produced by HashingTF and scales each feature [10].
 
 ### Defining Training and Test Sets
 
-Training and test sets were defined by k-fold cross validation implemented using Scikit-learn’s KFold. The data was split into 5 folds and models are trained and tested 5 times. In each iteration, 4 folds are used to train and 1 was used to test the models. The average performance was computed to reflect the overall result.
+Training and test sets were defined by k-fold cross validation implemented using Scikit-learn’s KFold. The data was split into 5 folds and models were trained and tested 5 times. In each iteration, 4 folds are used to train and 1 was used to test the models. The average performance was computed to reflect the overall result.
 
 ### Classifiers
 
-For the binary classification of the articles into True and False classes, k-nearest neighbors (kNN) and random forest (RF) classifiers were chosen. kNN was implemented using Scikit-learn’s KNeighborsClassifier [11]. The number of nearest neighbors for each sample was determined by the square root of the input and incremented if the result was even. The random forest classifier was implemented using Scikit-learn’s RandomForestClassifier [12]. Random forest parameters were tuned resulting in an ensemble of 45 trees with a max depth of 20.
+For the binary classification of the articles into True and False classes, k-nearest neighbors (kNN) and random forest (RF) classifiers were chosen. kNN was implemented using Scikit-learn’s KNeighborsClassifier [11]. The number of nearest neighbors for each sample was determined by the square root of the input and incremented if the result was even. The random forest classifier was implemented using Scikit-learn’s RandomForestClassifier [12]. Random forest parameters were tuned, resulting in an ensemble of 45 trees with a max depth of 20.
 
 ---
 
@@ -64,7 +64,7 @@ For the binary classification of the articles into True and False classes, k-nea
 
 Numerous tests were conducted to analyze and compare models based on performance, sensitivity to the number of extracted features, the effect of data imbalance, and the effect of stratification using f1 score as the measure.
 
-The comparison of models based on performance alone was conducted using a stratified sample of 42000 data points with a balanced class distribution. Both classifiers were able to produce near-perfect f1 scores but as exhibited by the table and the plot below RF outperformed kNN by more than 2%.
+The comparison of models based on performance alone was conducted using a stratified sample of 42000 data points with a balanced class distribution. Both classifiers were able to produce near-perfect f1 scores however, as exhibited by the table and the plot below, RF outperformed kNN by more than 2%.
 
 <table align="center">
     <tr>
@@ -188,7 +188,7 @@ Lastly, models were tested to see the effect of stratification. To do so 21000 d
 
 ## Discussion
 
-The models were able to achieve promising results and even a near-perfect f1 score in the case of Random forest. While tools and techniques utilized during pre-processing and feature extraction like removal of stop words and unimportant tokens and TF-IDF could be credited for the high performance, it’s important to take into account the effect that the nature of the dataset i.e. how and from where the articles were collected, whether they were artificially produced or manually written, ... might have had on the performance. This effect could be measured by cross-referencing and comparing the results of this dataset with an already validated dataset with an equivalent schema.
+The models were able to achieve promising results and even a near-perfect f1 score in the case of random forest. While tools and techniques utilized during pre-processing and feature extraction (e.g., removal of unimportant tokens and employment of TF-IDF) could be credited for the high performance, it’s important to take into account the effect that the nature of the dataset i.e. how and from where the articles were collected, whether they were artificially produced or manually written, might have had on the performance. This effect could be measured by cross-referencing and comparing the results of this dataset with an already validated dataset with an equivalent schema.
 
 Regardless of the nature of the data, random forest performed better and proved to be more stable. kNN’s underperformance is mainly because it relies on the distance between data points for prediction. This distance can be affected when the number of features is modified. Moreover, in presence of data imbalance, the majority class will have more weight in the prediction as it occupies a larger portion of the data space, leading to a rise in the number of false negatives or false positives. Random forest on the other hand is an ensemble of trees where each tree splits the data based on the features and classifies data points independent of one another leading to overall consistent performance.
 
