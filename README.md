@@ -23,7 +23,7 @@ For analysis, an imbalanced dataset with categorical features containing news ar
 ### Data Pre-processing
 
 Data pre-processing was done utilizing tools from Pandas library [5], Natural Language Tool Kit (NLTK) [6], Spark [7], and Scikit-learn [8].
-Using Pandas DataFrames, irrelevant features, subject, and date were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
+Using Pandas DataFrames, irrelevant features, namely subject and date were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
 
 | Sample Name | Number of True Data Points | Number of Fake Data Points | Goal |
 | :-----: |     :-----:         |  :-----: | :-----:|
@@ -35,7 +35,7 @@ Using Pandas DataFrames, irrelevant features, subject, and date were removed and
 | Imbalanced_Sample3 | 20000 | 10000 | Large-scale analysis of effect of data imbalance |
 | Imbalanced_Sample4 | 21324 | 22314 | Dataset without anamolies |
 
-Using Spark RDDs, data points were filtered to remove instances with missing features and anomalies. Title and text fields of each article were then concatenated to format data points into tuples containing content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9]. Sequence of tokens extracted by examining articles, stop words from NLTK's stop words module, and punctuation marks from Python's string module were used to filter out the noise and trivial tokens from the word vectors to allow for more robust feature extraction by focusing on important words.
+Using Spark RDDs, data points were filtered to remove instances with missing features and anomalies. Title and text fields of each article were then concatenated to format data points into tuples containing content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9] and then filtered to remove noise and trivial tokens using a sequence of tokens extracted by examining articles, stop words from NLTK's stop words module, and punctuation marks from Python's string module to allow for more robust feature extraction by focusing on important words.
 
 ### Feature Extraction
 
@@ -47,7 +47,7 @@ To convert the tokenized and filtered articles to a set of features utilized by 
 
 Spark’s TF-IDF is implemented in two steps:
 
-- HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick, mapping a raw feature into an index (term) by applying a hashing function. Then, term frequencies are calculated based on the mapped indices.
+- HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick, mapping a raw feature into an index (term) by applying a hashing function. Term frequencies are then calculated based on the mapped indices.
 - IDF: Estimator that fits on a dataset and produces an IDFModel. The IDFModel takes feature vectors produced by HashingTF and scales each feature [10].
 
 ### Defining Training and Test Sets
@@ -64,7 +64,7 @@ For the binary classification of the articles into True and False classes, k-nea
 
 Numerous tests were conducted to analyze and compare models based on performance, sensitivity to the number of extracted features, the effect of data imbalance, and the effect of stratification using f1 score as the measure.
 
-The comparison of models based on performance alone was conducted using a stratified sample of 42000 data points with a balanced class distribution. Both classifiers were able to produce near-perfect f1 scores but, as exhibited by the table and the plot below, RF outperformed kNN by more than 2%.
+The comparison of models based on performance alone was conducted using a stratified sample of 42000 data points with a balanced class distribution. Both classifiers were able to produce near-perfect f1 scores however, as exhibited by the table and the plot below, RF outperformed kNN by more than 2%.
 
 <table align="center">
     <tr>
@@ -188,11 +188,11 @@ Lastly, models were tested to see the effect of stratification. To do so 21000 d
 
 ## Discussion
 
-The models were able to achieve promising results and even a near-perfect f1 score in the case of random forest. While tools and techniques utilized during pre-processing and feature extraction like removal of stop words and unimportant tokens as well as TF-IDF could be credited for the high performance, it’s important to take into account the effect that the nature of the dataset i.e. how and from where the articles were collected, whether they were artificially produced or manually written, might have had an effect on the performance. This effect could be measured by cross-referencing and comparing the results of this dataset with an already validated dataset with an equivalent schema.
+The models were able to achieve promising results and even a near-perfect f1 score in the case of random forest. While tools and techniques utilized during pre-processing and feature extraction (e.g., removal of unimportant tokens and employment of TF-IDF) could be credited for the high performance, it’s important to take into account the effect that the nature of the dataset i.e. how and from where the articles were collected, whether they were artificially produced or manually written, might have had on the performance. This effect could be measured by cross-referencing and comparing the results of this dataset with an already validated dataset with an equivalent schema.
 
 Regardless of the nature of the data, random forest performed better and proved to be more stable. kNN’s underperformance is mainly because it relies on the distance between data points for prediction. This distance can be affected when the number of features is modified. Moreover, in presence of data imbalance, the majority class will have more weight in the prediction as it occupies a larger portion of the data space, leading to a rise in the number of false negatives or false positives. Random forest on the other hand is an ensemble of trees where each tree splits the data based on the features and classifies data points independent of one another leading to overall consistent performance.
 
-To build on this work and its findings, possible future work could improve the models’ performance by exploring other forms of feature extraction namely those that take word semantics into account (e.g., word embedding). They could benefit from having larger and more versatile datasets to ensure that the performance of the models is not overshadowed by the nature of the dataset and lastly, they could take advantage of algorithms that are more stable in dealing with high-dimensional data to achieve better results.
+To build on this work and its findings, possible future work could improve the models’ performance by exploring other forms of feature extraction namely those that take word semantics into account (e.g., word embedding). They could benefit from having larger and more versatile datasets to ensure the performance of the models is not overshadowed by the nature of the dataset and lastly, they could take advantage of algorithms that are more stable in dealing with high-dimensional data to achieve better results.
 
 ---
 
