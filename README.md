@@ -18,11 +18,11 @@ This project is aimed at automating classification of news articles by training 
 
 ## Materials and Methods
 
-For analysis, an imbalanced dataset with catergorical features containing news articles from 2016 to 2017 was selected []. Dataset is comprised of two sets: a fake set containing 23503 fabricated articles (59.8 MB) and a true set containing 21418 authentic articles (51.8 MB). Attributes include title, text, subject, and the date of the article.
+For analysis, an imbalanced dataset with catergorical features containing news articles from 2016 to 2017 was selected [4]. Dataset is comprised of two sets: a fake set containing 23503 fabricated articles (59.8 MB) and a true set containing 21418 authentic articles (51.8 MB). Attributes include title, text, subject, and the date of the article.
 
 ### Data Pre-processing
 
-Data pre-procesing was done utilizing tools from Pandas library [], Natural Language Tool Kit (NLTK) [], Spark [], and Scikit-larn [].
+Data pre-procesing was done utilizing tools from Pandas library [5], Natural Language Tool Kit (NLTK) [6], Spark [7], and Scikit-larn [8].
 Using Pandas DataFrames irrelevant features, subject and date, were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
 
 | Sample Name | Number of True Data Points | Number of Fake Data Points | Goal |
@@ -35,7 +35,7 @@ Using Pandas DataFrames irrelevant features, subject and date, were removed and 
 | Imbalanced_Sample3 | 20000 | 10000 | Large-scale analysis of effect of data imbalance |
 | Imbalanced_Sample4 | 21324 | 22314 | Dataset without anamolies |
 
-Using Spark RDDs data points were filtered to remove instances with missing features and anamolies. Title and text fields of each article were then concatenated to format data points into tuples containig content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [] and sequence of tokens extracted by examining articles, stop words from NLTK's stop words module and punctuation marks from Python's string module were used to filter out noise and trivial tokens from the word vectors to allow for a more robust feature extraction by focusing on important words.
+Using Spark RDDs data points were filtered to remove instances with missing features and anamolies. Title and text fields of each article were then concatenated to format data points into tuples containig content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9] and sequence of tokens extracted by examining articles, stop words from NLTK's stop words module and punctuation marks from Python's string module were used to filter out noise and trivial tokens from the word vectors to allow for a more robust feature extraction by focusing on important words.
 
 ### Feature Extraction
 
@@ -48,7 +48,7 @@ To conevrt the tokenized and filtered articles to a set of features utilized by 
 Spark’s TF-IDF is implemented in two steps:
 
 - HashingTF: Transformer that takes sets of terms and converts those into fixed-length feature vectors. It utilizes a hashing trick , mapping a raw feature into an index (term) by applying a hashing function. then term frequencies are calculated based on the mapped indices.
-- IDF: Estimator which is fit on a dataset and produces an IDFModel. The IDFModel takes feature vectors produced by HashingTF and scales each feature [].
+- IDF: Estimator which is fit on a dataset and produces an IDFModel. The IDFModel takes feature vectors produced by HashingTF and scales each feature [10].
 
 ### Defining Training and Test Sets
 
@@ -56,7 +56,7 @@ Training and test sets were defined by k-fold cross validation implemented using
 
 ### Classifiers
 
-For the binary classification of the articles into True and False classes, K-nearest neighbors (kNN) and random forest (RF) classifiers were chosen. kNN was implemented using Scikit-learn’s KNeighborsClassifier[]. The number of nearest neighbor for each sample was determined by the square root of the input and incremented if the result was even. Random forest classifier was implemented using Scikit-learn’s RandomForestClassifier[]. Random forest parameters were tuned resulting in an ensemble of 45 trees with max depth of 20.
+For the binary classification of the articles into True and False classes, K-nearest neighbors (kNN) and random forest (RF) classifiers were chosen. kNN was implemented using Scikit-learn’s KNeighborsClassifier [11]. The number of nearest neighbor for each sample was determined by the square root of the input and incremented if the result was even. Random forest classifier was implemented using Scikit-learn’s RandomForestClassifier [12]. Random forest parameters were tuned resulting in an ensemble of 45 trees with max depth of 20.
 
 ---
 
@@ -200,12 +200,20 @@ Lastly models were tested to see the effect of stratification. To do so 21000 da
 
 [3] I. Ahmad, M. Yousaf, S. Yousaf, and M. O. Ahmad, “Fake News Detection Using Machine Learning Ensemble Methods,” Complexity, 17-Oct-2020. [Online]. Available: <https://www.hindawi.com/journals/complexity/2020/8885861>. [Accessed: 18-Feb-2021].
 
-[4] Brownlee, J. (2019, August 07). What is natural language processing? Retrieved February 19, 2021, from <https://machinelearningmastery.com/natural-language-processing/>
+[4] C. Bisaillon, “Fake and real news dataset,” 26-Mar-2020. [Online]. Available: <https://www.kaggle.com/clmentbisaillon/fake-and-real-news-dataset>. [Accessed: 1-Apr-2021].
 
-[5] Cheng, R. (2020, November 16). Top NLP libraries to Use 2020. Retrieved February 19, 2021, from <https://towardsdatascience.com/top-nlp-libraries-to-use-2020-4f700cdb841f>
+[5] “pandas documentation,” pandas documentation - pandas 1.2.4 documentation. [Online]. Available: <https://pandas.pydata.org/docs/>. [Accessed: 1-Apr-2021].
 
-[6] Scikit-learn. (n.d.). Retrieved February 19, 2021, from <https://scikit-learn.org/stable/>
+[6] “Natural Language Toolkit,” Natural Language Toolkit - NLTK 3.6 documentation. [Online]. Available: <https://www.nltk.org/>. [Accessed: 1-Apr-2021].
 
-[7] The beginner's guide to Text VECTORIZATION. (2017, September 21). Retrieved February 19, 2021, from <https://monkeylearn.com/blog/beginners-guide-text-vectorization/>
+[7] “Spark Overview,” Overview - Spark 3.1.1 Documentation. [Online]. Available: <https://spark.apache.org/docs/latest/>. [Accessed: 1-Apr-2021].
 
-[8]Sklearn.feature_extraction.text.TfidfTransformer¶. (n.d.). Retrieved February 19, 2021, from <https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfTransformer.html#:~:text=The%20formula%20that%20is%20used,document%20frequency%20of%20t%3B%20the>
+[8] “learn,” scikit. [Online]. Available: <https://scikit-learn.org/stable/>. [Accessed: 1-Apr-2021].
+
+[9] “Extracting, transforming and selecting features,” Extracting, transforming and selecting features - Spark 3.1.1 Documentation. [Online]. Available: <https://spark.apache.org/docs/latest/ml-features#tokenizer>. [Accessed: 1-Apr-2021].
+
+[10] “Feature Extraction and Transformation - RDD-based API,” Feature Extraction and Transformation - RDD-based API - Spark 3.1.1 Documentation. [Online]. Available: <https://spark.apache.org/docs/latest/mllib-feature-extraction.html#tf-idf>. [Accessed: 17-Apr-2021].
+
+[11] “sklearn.neighbors.KNeighborsClassifier¶,” scikit. [Online]. Available: <https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html>. [Accessed: 1-Apr-2021].
+
+[12] “sklearn.ensemble.RandomForestClassifier¶,” scikit. [Online]. Available: <https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html>. [Accessed: 1-Apr-2021].
