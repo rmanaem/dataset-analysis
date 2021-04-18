@@ -188,7 +188,11 @@ Lastly models were tested to see the effect of stratification. To do so 21000 da
 
 ## Discussion
 
-...
+The models were able to achieve promising results and even a near-perfect f1 score in the case of Random forest. While tools and techniques utilized during pre-processing and feature extraction like removal of stop words and unimportant tokens and TF-IDF could be credited for the high performance, it’s important to take into account the effect that the nature of the dataset i.e. how and from where the articles were collected, whether they were artificially produced or manually written, ... might have had on the performance. This effect could be measured by cross-referencing and comparing the results of this dataset with an already validated dataset with an equivalent schema.
+
+Regardless of the nature of the data, random forest performed better and proved to be more stable. KNN’s underperformance is mainly because it relies on the distance between data points for prediction. This distance can be affected when the number of features is modified. Moreover, in presence of data imbalance, the majority class will have more weight in the prediction as it occupies a larger portion of the data space, leading to a rise in the number of false negatives or false positives. Random forest on the other hand is an ensemble of trees where each tree splits the data based on the features and classifies data points independent of one another leading to overall consistent performance.
+
+To build on this work and its findings, possible future work could improve the models’ performance by exploring other forms of feature extraction namely those that take word semantics into account (e.g., word embedding). They could benefit from having larger and more versatile datasets to ensure the performance of the models is not overshadowed by the nature of the dataset and lastly, they could take advantage of algorithms that are more stable in dealing with high-dimensional data to achieve better results.
 
 ---
 
