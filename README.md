@@ -1,4 +1,4 @@
-# Veracity Detection Using Supervised Learning
+# Veracity Detection
 
 ## Abstract
 
