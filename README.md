@@ -25,21 +25,21 @@ For analysis, an imbalanced dataset with categorical features containing news ar
 Data pre-processing was done utilizing tools from Pandas library [5], Natural Language Tool Kit (NLTK) [6], Spark [7], and Scikit-learn [8].
 Using Pandas DataFrames, irrelevant features, namely subject and date were removed and data points in sets were labeled separately. Each set was then randomly sampled for a specific goal.
 
-| Sample Name | Number of True Data Points | Number of Fake Data Points | Goal |
-| :-----: |     :-----:         |  :-----: | :-----:|
-| Balanced_Sample1 | 3000 | 3000 | Building models and tuning parametes |
-| Balanced_Sample2 | 15000 | 15000 | Large-scale analysis effect of data        imbalance |
-| Balanced_Sample3 | 21000 | 21000 | Resolving data imbalance and final training and testing of models |
-| Imbalanced_Sample1 | 2000 | 4000 | Small-scale analysis of effect of data imbalance |
-| Imbalanced_Sample2 | 10000 | 20000 | Large-scale analysis of effect of data imbalance |
-| Imbalanced_Sample3 | 20000 | 10000 | Large-scale analysis of effect of data imbalance |
-| Imbalanced_Sample4 | 21324 | 22314 | Dataset without anamolies |
+|    Sample Name     | Number of True Data Points | Number of Fake Data Points |                               Goal                                |
+| :----------------: | :------------------------: | :------------------------: | :---------------------------------------------------------------: |
+|  Balanced_Sample1  |            3000            |            3000            |               Building models and tuning parametes                |
+|  Balanced_Sample2  |           15000            |           15000            |           Large-scale analysis effect of data imbalance           |
+|  Balanced_Sample3  |           21000            |           21000            | Resolving data imbalance and final training and testing of models |
+| Imbalanced_Sample1 |            2000            |            4000            |         Small-scale analysis of effect of data imbalance          |
+| Imbalanced_Sample2 |           10000            |           20000            |         Large-scale analysis of effect of data imbalance          |
+| Imbalanced_Sample3 |           20000            |           10000            |         Large-scale analysis of effect of data imbalance          |
+| Imbalanced_Sample4 |           21324            |           22314            |                     Dataset without anamolies                     |
 
 Using Spark RDDs, data points were filtered to remove instances with missing features and anomalies. Title and text fields of each article were then concatenated to format data points into tuples containing content (title and text) and label, simplifying and speeding up processing in later stages. The content of each article was transformed into a vector of words by applying Spark's Tokenizer [9] and then filtered to remove noise and trivial tokens using a sequence of tokens extracted by examining articles, stop words from NLTK's stop words module, and punctuation marks from Python's string module to allow for more robust feature extraction by focusing on important words.
 
 ### Feature Extraction
 
-To convert the tokenized and filtered articles to a set of features utilized by classification algorithms, the term frequency-inverse document frequency (TF-IDF) technique was employed. TF-IDF is a feature vectorization method widely used in text mining to reflect the importance of a term to a document in the corpus. Term frequency of ***t*** in document ***d*** denoted by ***TF(t, d)*** is the number of times that term t appears in document ***d***, while document frequency of term ***t*** in corpus ***D*** denoted by ***DF(t, D)*** is the number of documents that contain term ***t***. Using term frequency alone to measure the importance would lead to emphasizing terms that appear very often but carry little information about the document. To resolve this issue Inverse document frequency is used as a numerical measure of how much information a term provides.
+To convert the tokenized and filtered articles to a set of features utilized by classification algorithms, the term frequency-inverse document frequency (TF-IDF) technique was employed. TF-IDF is a feature vectorization method widely used in text mining to reflect the importance of a term to a document in the corpus. Term frequency of **_t_** in document **_d_** denoted by **_TF(t, d)_** is the number of times that term t appears in document **_d_**, while document frequency of term **_t_** in corpus **_D_** denoted by **_DF(t, D)_** is the number of documents that contain term **_t_**. Using term frequency alone to measure the importance would lead to emphasizing terms that appear very often but carry little information about the document. To resolve this issue Inverse document frequency is used as a numerical measure of how much information a term provides.
 
 <p alt="IDF" align="center"><a href="https://spark.apache.org/docs/latest/ml-features#tf-idf"><img src="https://github.com/rmanaem/veracity-detection/blob/master/figures/idf.png?raw=true"/></a></p>
 
@@ -221,3 +221,7 @@ To build on this work and its findings, possible future work could improve the m
 [11] “sklearn.neighbors.KNeighborsClassifier¶,” scikit. [Online]. Available: <https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html>. [Accessed: 1-Apr-2021].
 
 [12] “sklearn.ensemble.RandomForestClassifier¶,” scikit. [Online]. Available: <https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html>. [Accessed: 1-Apr-2021].
+
+## License
+
+Veracity detection is developed under the terms of [MIT License](LICENSE).
