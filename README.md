@@ -224,4 +224,4 @@ To build on this work and its findings, possible future work could improve the m
 
 ## License
 
-Veracity detection is developed under the terms of [MIT License](LICENSE).
+Veracity detection is licensed under the terms of [MIT License](LICENSE).
